@@ -73,7 +73,7 @@
         Post the photo on any SNS with # below, and get original goods!
       </p>
       <!-- 英語の文章の直下にボタンを配置 -->
-      <button class="copy-button" onclick="copyHashtags()">Copy hashtag ＃をコピー</button>
+      <button class="copy-button" onclick="copyHashtags()">Copy #. ＃をコピーする</button>
     </div>
     <!-- 画像表示 -->
     <div class="image-container">
@@ -89,7 +89,7 @@
     function copyHashtags() {
       const hashtagText = document.getElementById('hashtagText').innerText;
       navigator.clipboard.writeText(hashtagText).then(() => {
-        alert('# copied,lets share photo on SNS. #をコピーしました、ジハンキホーテの画像をSNSでシェアしよう');
+        alert('# copied. #をコピーしました');
       }).catch(() => {
         alert('Failed to copy hashtags.');
       });
