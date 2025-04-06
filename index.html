@@ -43,6 +43,7 @@
     .hashtag-text {
       margin: 20px 0;
       font-size: 1.2em;
+      white-space: pre-line;
     }
     /* コピー用ボタン */
     .copy-button {
@@ -61,18 +62,24 @@
 </head>
 <body>
   <div class="container">
-    <!-- ヘッダーテキスト（日本語と英語） -->
+    <!-- ヘッダーテキスト（日本語は改行を挿入） -->
     <div class="header-text">
-      <p>SNS投稿してオリジナルグッズをゲットしよう！</p>
+      <p>
+        SNS投稿した画面を<br>
+        ドンキ別館のレジで見せて<br>
+        オリジナルグッズをゲットしよう！
+      </p>
       <p>Post on SNS and get original goods!</p>
     </div>
     <!-- 画像表示 -->
     <div class="image-container">
       <img src="images/jihanki_sns_lp.png" alt="Images">
     </div>
-    <!-- ハッシュタグテキスト -->
+    <!-- ハッシュタグテキスト（改行して表示） -->
     <div class="hashtag-text" id="hashtagText">
-      #JIHANQUIJOTE　#ジハン・キホーテ　＃ジハンキホーテ
+      #JIHANQUIJOTE<br>
+      #ジハン・キホーテ<br>
+      ＃ジハンキホーテ
     </div>
     <!-- コピーするボタン -->
     <button class="copy-button" onclick="copyHashtags()">Copy hashtag</button>
