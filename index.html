@@ -88,7 +88,7 @@
     function copyHashtags() {
       const hashtagText = document.getElementById('hashtagText').innerText;
       navigator.clipboard.writeText(hashtagText).then(() => {
-        alert('Hashtags copied to clipboard!');
+        alert('Hashtags copied. #をコピーしました');
       }).catch(() => {
         alert('Failed to copy hashtags.');
       });
