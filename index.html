@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LP Page</title>
+  <style>
+    /* 全体のリセットとベーススタイル */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #fafafa;
+      color: #333;
+      line-height: 1.5;
+    }
+    /* コンテナ設定 */
+    .container {
+      max-width: 100%;
+      padding: 20px;
+    }
+    /* ヘッダーテキスト */
+    .header-text {
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+    /* 画像のレスポンシブ設定 */
+    .image-container {
+      width: 100%;
+      overflow: hidden;
+    }
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    /* ハッシュタグテキスト */
+    .hashtag-text {
+      margin: 20px 0;
+      font-size: 1.2em;
+    }
+    /* コピー用ボタン */
+    .copy-button {
+      padding: 12px 24px;
+      font-size: 1em;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .copy-button:active {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ヘッダーテキスト（日本語と英語） -->
+    <div class="header-text">
+      <p>SNS投稿してオリジナルグッズをゲットしよう！</p>
+      <p>Post on SNS and get original goods!</p>
+    </div>
+    <!-- 画像表示 -->
+    <div class="image-container">
+      <img src="jihanki_sns_lp.png" alt="LP Image">
+    </div>
+    <!-- ハッシュタグテキスト -->
+    <div class="hashtag-text" id="hashtagText">
+      #JIHANQUIJOTE　#ジハン・キホーテ　＃ジハンキホーテ
+    </div>
+    <!-- コピーするボタン -->
+    <button class="copy-button" onclick="copyHashtags()">Copy hashtag</button>
+  </div>
+  
+  <script>
+    function copyHashtags() {
+      const hashtagText = document.getElementById('hashtagText').innerText;
+      navigator.clipboard.writeText(hashtagText).then(() => {
+        alert('Hashtags copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy hashtags.');
+      });
+    }
+  </script>
+</body>
+</html>
