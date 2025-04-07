@@ -39,11 +39,15 @@
       display: block;
       object-fit: cover;
     }
-    /* ハッシュタグテキスト（ページ上表示用） */
+    /* ハッシュタグとリンクを含むコンテナ */
     .hashtag-text {
       margin: 20px 0;
       font-size: 1.2em;
-      white-space: normal; /* 改行を無視して1行に表示 */
+      cursor: pointer;
+    }
+    /* ハッシュタグ表示部分 */
+    .hashtags {
+      display: block; /* 改行で分ける */
     }
     /* X投稿リンクのスタイル */
     .tweet-link {
@@ -64,17 +68,25 @@
         ＃とお店の画像をSNSに投稿してドンペングッズをGET！SNSなら何でもOK！
       </p>
       <p>
-        Post the photo and # below on any SNS,and get original goods!
+        Post the photo and # below on any SNS, and get original goods!
       </p>
     </div>
     
-    <!-- ハッシュタグテキストとX投稿リンクを1行にまとめる -->
-    <div class="hashtag-text" id="hashtagText">
-      #ジハン・キホーテ  #ジハンキホーテ  #JIHANQUIJOTE <a class="tweet-link" 
-      href="https://x.com/intent/tweet?text=%23%E3%82%B8%E3%83%8F%E3%83%B3%E3%83%BB%E3%82%AD%E3%83%9B%E3%83%BC%E3%83%86%20%20%23%E3%82%B8%E3%83%8F%E3%83%B3%E3%82%AD%E3%83%9B%E3%83%BC%E3%83%86%20%20%23JIHANQUIJOTE%0A%E3%83%89%E3%83%B3%E3%82%AD%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97%E3%81%AE%E5%90%91%E3%81%84%E3%81%AB%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%EF%BC%81%0AOpened%20across%20from%20Donki%20ShibuyaHonten%21" 
-      target="_blank" rel="noopener noreferrer"><br>
-      【Post on Ｘ , Ｘでポストする】
-      </a>
+    <!-- ハッシュタグテキストとX投稿リンク -->
+    <div class="hashtag-text" id="hashtagContainer">
+      <!-- ハッシュタグ部分（クリックでコピー対象） -->
+      <span class="hashtags" id="hashtags" onclick="copyHashtags()">
+        #ジハン・キホーテ  #ジハンキホーテ  #JIHANQUIJOTE
+      </span>
+      <!-- X投稿リンク（こちらは通常のリンク動作） -->
+      <span>
+        <a class="tweet-link" 
+           href="https://x.com/intent/tweet?text=%23%E3%82%B8%E3%83%8F%E3%83%B3%E3%83%BB%E3%82%AD%E3%83%9B%E3%83%BC%E3%83%86%20%20%23%E3%82%B8%E3%83%8F%E3%83%B3%E3%82%AD%E3%83%9B%E3%83%BC%E3%83%86%20%20%23JIHANQUIJOTE%0A%E3%83%89%E3%83%B3%E3%82%AD%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97%E3%81%AE%E5%90%91%E3%81%84%E3%81%AB%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%EF%BC%81%0AOpened%20across%20from%20Donki%20ShibuyaHonten%21" 
+           target="_blank" 
+           rel="noopener noreferrer">
+          【Post on X , Xでポストする】
+        </a>
+      </span>
     </div>
     
     <!-- 画像表示 -->
@@ -82,5 +94,20 @@
       <img src="images/jihanki_sns_lp.png" alt="Images">
     </div>
   </div>
+  
+  <script>
+    function copyHashtags() {
+      // id="hashtags"の部分のテキストをコピー
+      const hashtagsText = document.getElementById('hashtags').innerText.trim();
+      navigator.clipboard.writeText(hashtagsText)
+        .then(() => {
+          alert('ハッシュタグをコピーしました！');
+        })
+        .catch(err => {
+          alert('コピーに失敗しました。');
+          console.error('コピーエラー: ', err);
+        });
+    }
+  </script>
 </body>
 </html>
