@@ -45,20 +45,6 @@
       font-size: 1.2em;
       white-space: pre-line;
     }
-    /* コピー用ボタン */
-    .copy-button {
-      padding: 12px 24px;
-      font-size: 1em;
-      background-color: #007BFF;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .copy-button:active {
-      background-color: #0056b3;
-    }
     /* ツイートリンクのスタイル */
     .tweet-link {
       display: inline-block;
@@ -83,10 +69,8 @@
       <p>
         Post the photo on any SNS with # below, and get original goods!
       </p>
-      <!-- コピー用ボタン -->
-      <button class="copy-button" onclick="copyHashtags()">Copy #. ＃をコピーする</button>
       <!-- ツイートリンク -->
-      <a class="tweet-link" href="https://x.com/intent/tweet?text=%23ジハン・キホーテ" target="_blank" rel="noopener noreferrer">ツイートする</a>
+      <a class="tweet-link" href="https://x.com/intent/tweet?text=%23ジハン・キホーテ %23 ジハンキホーテ %23JIHANKIJOTE 渋谷のドンキの向かいにオープン！" target="_blank" rel="noopener noreferrer">Xでポストする</a>
     </div>
     
     <!-- ハッシュタグテキスト -->
@@ -99,16 +83,5 @@
       <img src="images/jihanki_sns_lp.png" alt="Images">
     </div>
   </div>
-  
-  <script>
-    function copyHashtags() {
-      const hashtagText = document.getElementById('hashtagText').innerText;
-      navigator.clipboard.writeText(hashtagText).then(() => {
-        alert('# copied. #をコピーしました');
-      }).catch(() => {
-        alert('Failed to copy hashtags.');
-      });
-    }
-  </script>
 </body>
 </html>
