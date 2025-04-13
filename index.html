@@ -97,9 +97,10 @@
   
   <script>
     function copyHashtags() {
-      // id="hashtags"の部分のテキストをコピー
-      const hashtagsText = document.getElementById('hashtags').innerText.trim();
-      navigator.clipboard.writeText(hashtagsText)
+      // コピーされるテキストを定義（改行を含む）
+      const textToCopy = "#ジハン・キホーテ #ジハンキホーテ #JIHANQUIJOTE\nドンキ渋谷本店の向いにオープン！\nOpened across from Donki ShibuyaHonten!";
+      
+      navigator.clipboard.writeText(textToCopy)
         .then(() => {
           alert('Copied # , #をコピーしました');
         })
