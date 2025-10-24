@@ -2,113 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LP Page</title>
-  <style>
-    /* 全体のリセットとベーススタイル */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #fafafa;
-      color: #333;
-      line-height: 1.5;
-    }
-    /* コンテナ設定 */
-    .container {
-      max-width: 100%;
-      padding: 20px;
-    }
-    /* ヘッダーテキスト */
-    .header-text {
-      margin-bottom: 20px;
-      font-size: 1.2em;
-    }
-    /* 画像のレスポンシブ設定 */
-    .image-container {
-      width: 100%;
-      overflow: hidden;
-    }
-    .image-container img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-    /* ハッシュタグとリンクを含むコンテナ */
-    .hashtag-text {
-      margin: 20px 0;
-      font-size: 1.2em;
-      cursor: pointer;
-    }
-    /* ハッシュタグ表示部分 */
-    .hashtags {
-      display: block; /* 改行で分ける */
-    }
-    /* X投稿リンクのスタイル */
-    .tweet-link {
-      font-size: 1em;
-      text-decoration: none;
-      color: #007BFF;
-    }
-    .tweet-link:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <meta http-equiv="refresh" content="0; URL=https://www.donki.com/">
+  <script>
+    // JavaScriptでも念のためリダイレクト（メタタグが効かない場合の保険）
+    window.location.replace("https://www.donki.com/");
+  </script>
 </head>
 <body>
-  <div class="container">
-    <!-- ヘッダーテキスト -->
-    <div class="header-text">
-      <p>
-        #とお店の画像をSNSに投稿してドンペングッズをGET！SNSなら何でもOK！
-      </p>
-      <p>
-        Post the photo and # below on any SNS, and get original goods!
-      </p>
-    </div>
-    
-    <!-- ハッシュタグテキストとX投稿リンク -->
-    <div class="hashtag-text" id="hashtagContainer">
-      <!-- ハッシュタグ部分（クリックでコピー対象） -->
-      <span class="hashtags" id="hashtags" onclick="copyHashtags()">
-        <strong>#ジハン・キホーテ  #ジハンキホーテ  #JIHANQUIJOTE</strong>
-      </span>
-      <!-- X投稿リンク（こちらは通常のリンク動作） -->
-      <span>
-        <a class="tweet-link" 
-           href="https://x.com/intent/tweet?text=%23%E3%82%B8%E3%83%8F%E3%83%B3%E3%83%BB%E3%82%AD%E3%83%9B%E3%83%BC%E3%83%86%20%20%23%E3%82%B8%E3%83%8F%E3%83%B3%E3%82%AD%E3%83%9B%E3%83%BC%E3%83%86%20%20%23JIHANQUIJOTE%0A%E3%83%89%E3%83%B3%E3%82%AD%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97%E3%81%AE%E5%90%91%E3%81%84%E3%81%AB%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%EF%BC%81%0AOpened%20across%20from%20Donki%20ShibuyaHonten%21" 
-           target="_blank" 
-           rel="noopener noreferrer">
-          【 ☞ Post on X , Xでポストする】
-        </a>
-      </span>
-    </div>
-    
-    <!-- 画像表示 -->
-    <div class="image-container">
-      <img src="images/jihanki_sns_lp.png" alt="Images">
-    </div>
-  </div>
-  
-  <script>
-    function copyHashtags() {
-      // コピーされるテキストを定義（改行を含む）
-      const textToCopy = "#ジハン・キホーテ #ジハンキホーテ #JIHANQUIJOTE\nドンキ渋谷本店の向いにオープン！\nOpened across from Donki ShibuyaHonten!";
-      
-      navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-          alert('Copied # , #をコピーしました');
-        })
-        .catch(err => {
-          alert('コピーに失敗しました。');
-          console.error('コピーエラー: ', err);
-        });
-    }
-  </script>
 </body>
 </html>
