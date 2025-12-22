@@ -23,7 +23,7 @@
       color:var(--fg);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Arial, sans-serif;
       line-height:1.35;
-      overflow:hidden; /* どの端末でも“見切れ”を避けるため、スクロールではなく縮小表示で対応 */
+      overflow:hidden;
     }
 
     .app{
@@ -35,7 +35,6 @@
       gap:10px;
     }
 
-    /* --- FIT VIEWPORT (no clipping) --- */
     .stageWrap{
       flex:1;
       width:100%;
@@ -49,10 +48,8 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       background:#fff;
-      /* width/height は JS で “表示可能領域に収まるサイズ” に更新 */
     }
 
-    /* 基準サイズ（16:9）を固定し、端末に合わせてスケール */
     .stage{
       width:1280px;
       height:720px;
@@ -111,6 +108,8 @@
 
     .grid2{display:grid; grid-template-columns: 1.05fr .95fr; gap:18px;}
     .grid3{display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px;}
+    .grid4{display:grid; grid-template-columns: 1fr 1fr; gap:14px;}
+    .grid2tight{display:grid; grid-template-columns: 1fr 1fr; gap:14px;}
 
     .card{
       border:1px solid var(--line);
@@ -131,6 +130,7 @@
 
     ul{margin:0; padding-left:18px;}
     li{margin:7px 0;}
+
     .kpi{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -145,10 +145,7 @@
     .kpi .box b{display:block; font-size:13px;}
     .kpi .box span{display:block; margin-top:6px; color:var(--muted); font-size:12px;}
 
-    .accent{
-      color:var(--accent2);
-      font-weight:800;
-    }
+    .accent{color:var(--accent2); font-weight:800;}
     .callout{
       border-left:4px solid var(--accent);
       background:#f4fbfc;
@@ -157,10 +154,18 @@
       margin-top:12px;
     }
     .callout b{display:block; margin-bottom:6px;}
-    .note{
-      color:var(--muted);
-      font-size:12px;
-      margin-top:10px;
+    .note{color:var(--muted); font-size:12px; margin-top:10px;}
+
+    .badge{
+      display:inline-block;
+      padding:3px 8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fafafa;
+      font-size:11px;
+      color:#333;
+      margin-left:6px;
+      vertical-align:middle;
     }
 
     /* Footer controls */
@@ -207,7 +212,6 @@
       white-space:nowrap;
     }
 
-    /* 端末が小さいほど文字は小さくしてOK（見切れ防止の保険） */
     @media (max-width: 420px){
       .help{display:none}
     }
@@ -355,7 +359,84 @@
             </div>
           </section>
 
-          <!-- Slide 4 -->
+          <!-- Slide 4 (NEW: placed right after "How" before motivation/participation) -->
+          <section class="slide">
+            <div class="topbar">
+              <div>
+                <h2 class="title">企画構造：ラウンド制で「フェア」×「熱量維持」</h2>
+                <p class="subtitle">大学ごとの母数差を吸収し、中盤の“諦め”を防ぐ（ウルトラクイズ的チェックポイント）</p>
+              </div>
+              <div class="meta">
+                <div class="pill">番組化の核</div>
+              </div>
+            </div>
+
+            <div class="grid2">
+              <div class="card">
+                <h3>課題（累計勝負の弱点）</h3>
+                <ul>
+                  <li>大学ごとに学生数・導線・利用頻度が異なり、<b>同じ母数で競うと不公平</b></li>
+                  <li>期間累計だと有利校／不利校が固定化しやすい</li>
+                  <li>中盤で負けている学校が<b>諦めて離脱</b>するリスクが高い</li>
+                </ul>
+                <div class="callout">
+                  <b>ポイント</b>
+                  「不公平」より怖いのは「諦め」＝企画の熱量が死ぬこと。
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>解決：ラウンド制（チェックポイント方式）</h3>
+                <ul>
+                  <li>1企画（例：2ヶ月）を <b>複数ラウンド</b>に分割</li>
+                  <li><b>各ラウンドで勝敗を決める</b>（勝敗を付けるなら奇数回：3 or 5が有利）</li>
+                  <li>ラウンドごとに条件・ルールを設定し、勝ち筋を分散できる</li>
+                  <li>1ラウンド負けても次がある → <b>常に「まだ逆転できる」状態</b></li>
+                </ul>
+                <div class="callout">
+                  <b>勝者の決め方（案）</b>
+                  期間の総売上ではなく、<span class="accent">ラウンド勝利数（勝ち星）</span>で総合優勝を決める。
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:14px;">
+              <h3>2ヶ月を4分割する例（※奇数回なら 3 or 5 に寄せるのも検討）</h3>
+              <div class="grid4">
+                <div class="card">
+                  <h3>Round 1 <span class="badge">開幕戦</span></h3>
+                  <ul>
+                    <li>認知・勢いを作る</li>
+                    <li>暫定順位を早期に提示</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>Round 2 <span class="badge">変則ルール</span></h3>
+                  <ul>
+                    <li>カテゴリ縛り／点数勝負 等</li>
+                    <li>規模差の影響を緩和</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>Round 3 <span class="badge">逆転チャンス</span></h3>
+                  <ul>
+                    <li>係数・指定週 など</li>
+                    <li>中盤離脱を防ぐ</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>Round 4 <span class="badge">最終決戦</span></h3>
+                  <ul>
+                    <li>勝ち星で最終判定</li>
+                    <li>クライマックス演出</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="note">※ サイネージ表示は「第◯ラウンド」「戦績（◯勝◯敗）」「残りラウンド」を軸に“番組”として見せ続ける。</div>
+            </div>
+          </section>
+
+          <!-- Slide 5 -->
           <section class="slide">
             <div class="topbar">
               <div>
@@ -390,12 +471,12 @@
                   <li>SNS/学内/店頭の連動（拡散の型を用意）</li>
                   <li>次回へつなぐ（勝者特典／敗者リベンジ導線）</li>
                 </ul>
-                <div class="note">※ ここが弱いと単発イベント化し、目的（LTV/採用）に届かない</div>
+                <div class="note">※ ラウンド制は中盤の“諦め”を抑える強力な装置になる</div>
               </div>
             </div>
           </section>
 
-          <!-- Slide 5 -->
+          <!-- Slide 6 -->
           <section class="slide">
             <div class="topbar">
               <div>
@@ -437,7 +518,7 @@
             </div>
           </section>
 
-          <!-- Slide 6 -->
+          <!-- Slide 7 -->
           <section class="slide">
             <div class="topbar">
               <div>
@@ -475,7 +556,7 @@
             </div>
           </section>
 
-          <!-- Slide 7 -->
+          <!-- Slide 8 -->
           <section class="slide">
             <div class="topbar">
               <div>
@@ -522,7 +603,7 @@
             </div>
           </section>
 
-          <!-- Slide 8 -->
+          <!-- Slide 9 -->
           <section class="slide">
             <div class="topbar">
               <div>
@@ -542,6 +623,7 @@
                   <ul>
                     <li>売上目的ではなく「体験→採用・LTV」目的で推進する</li>
                     <li>学生が主役：ドンキは舞台提供者に徹する</li>
+                    <li>企画①は<span class="accent">ラウンド制</span>でフェアネスと熱量を担保する</li>
                     <li>参加は二層（コア50名＋周辺オープン）で設計する</li>
                     <li>運営継続は「母店インセンティブ設計」で担保する</li>
                   </ul>
@@ -549,6 +631,7 @@
                 <div class="card">
                   <h3>② 次フェーズで固めること</h3>
                   <ul>
+                    <li>ラウンド別ルールと勝敗判定（勝ち星）</li>
                     <li>モチベ維持の“表現設計”（可視化・煽り・連続性）</li>
                     <li>majica会員化／チャージ障壁の実態調査（アンケート設計）</li>
                     <li>ゲート読取の改善（UXとして最優先）</li>
@@ -577,7 +660,7 @@
         <div class="bar" id="bar"></div>
       </div>
 
-      <div class="help" id="pageText">1 / 8　（←→キー / スワイプでもOK）</div>
+      <div class="help" id="pageText">1 / 9　（←→キー / スワイプでもOK）</div>
     </div>
   </div>
 
@@ -597,7 +680,6 @@
       const stageWrap = document.getElementById('stageWrap');
       const stageOuter = document.getElementById('stageOuter');
       const stage = document.getElementById('stage');
-      const controls = document.getElementById('controls');
 
       function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
@@ -616,22 +698,14 @@
 
       const state = { index: 0, touchX: null, touchY: null };
 
-      // --- Fit-to-viewport scaling (no clipping on any device) ---
       function layout(){
-        // stageWrap の表示可能領域
         const rect = stageWrap.getBoundingClientRect();
-
-        // 余白（端末差・セーフエリア差の吸収）
         const pad = 8;
         const availW = Math.max(0, rect.width - pad*2);
         const availH = Math.max(0, rect.height - pad*2);
 
-        // 16:9固定のスライドを、必ず availW/availH に収める
         const scale = Math.max(0.1, Math.min(availW / BASE_W, availH / BASE_H));
-
         stage.style.transform = "scale(" + scale + ")";
-
-        // スケール後の表示サイズで外枠を合わせる（中央配置が崩れないように）
         stageOuter.style.width = (BASE_W * scale) + "px";
         stageOuter.style.height = (BASE_H * scale) + "px";
       }
@@ -639,7 +713,6 @@
       window.addEventListener('resize', layout);
       window.addEventListener('orientationchange', layout);
 
-      // init from hash
       const m = location.hash.match(/^#(\d+)$/);
       if(m){
         const n = parseInt(m[1],10);
@@ -658,7 +731,6 @@
         if(e.key === 'End') setIndex(total-1);
       });
 
-      // simple swipe
       stage.addEventListener('touchstart', (e)=>{
         if(!e.touches || e.touches.length!==1) return;
         state.touchX = e.touches[0].clientX;
@@ -678,9 +750,7 @@
         if(dx > 40) prev();
       }, {passive:true});
 
-      // first layout
       layout();
-      // iOSで初回レイアウトがズレる保険
       setTimeout(layout, 50);
       setTimeout(layout, 250);
     })();
