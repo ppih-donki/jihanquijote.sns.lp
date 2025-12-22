@@ -23,26 +23,46 @@
       color:var(--fg);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Arial, sans-serif;
       line-height:1.35;
+      overflow:hidden; /* どの端末でも“見切れ”を避けるため、スクロールではなく縮小表示で対応 */
     }
+
     .app{
-      min-height:100dvh;
+      height:100dvh;
       display:flex;
       flex-direction:column;
       align-items:center;
-      padding:24px 16px 18px;
-      gap:14px;
+      padding:16px 12px 12px;
+      gap:10px;
     }
 
-    /* Slide area (16:9) */
+    /* --- FIT VIEWPORT (no clipping) --- */
+    .stageWrap{
+      flex:1;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:0;
+    }
+    .stageOuter{
+      position:relative;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background:#fff;
+      /* width/height は JS で “表示可能領域に収まるサイズ” に更新 */
+    }
+
+    /* 基準サイズ（16:9）を固定し、端末に合わせてスケール */
     .stage{
-      width:min(var(--maxw), calc(100vw - 32px));
-      aspect-ratio: 16 / 9;
+      width:1280px;
+      height:720px;
       background:#fff;
       border:1px solid var(--line);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
+      transform-origin: top left;
+      will-change: transform;
     }
 
     .slide{
@@ -145,13 +165,15 @@
 
     /* Footer controls */
     .controls{
-      width:min(var(--maxw), calc(100vw - 32px));
+      width:100%;
+      max-width:var(--maxw);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
       color:var(--muted);
       font-size:12px;
+      flex:0 0 auto;
     }
     .btns{display:flex; gap:10px; align-items:center;}
     button{
@@ -185,319 +207,367 @@
       white-space:nowrap;
     }
 
-    /* Small screens */
-    @media (max-width: 720px){
-      .slide{padding:20px 18px}
-      .title{font-size:20px}
-      .grid2{grid-template-columns:1fr; gap:12px}
-      .grid3{grid-template-columns:1fr; gap:12px}
-      .meta{display:none}
-      button{padding:10px 10px}
+    /* 端末が小さいほど文字は小さくしてOK（見切れ防止の保険） */
+    @media (max-width: 420px){
+      .help{display:none}
     }
   </style>
 </head>
 
 <body>
   <div class="app">
-    <div class="stage" id="stage">
+    <div class="stageWrap" id="stageWrap">
+      <div class="stageOuter" id="stageOuter">
+        <div class="stage" id="stage">
 
-      <!-- Slide 1 -->
-      <section class="slide active">
-        <div class="topbar">
-          <div>
-            <h1 class="title">キャンパスドンキ：大学出展構想（役員向け骨子）</h1>
-            <p class="subtitle">「売上をつくる無人店」ではなく「未来の顧客と人材をつくる装置」へ</p>
-          </div>
-          <div class="meta">
-            <div>更新：2025/12/23</div>
-            <div class="pill">Why → What → How → 継続性</div>
-          </div>
-        </div>
-
-        <div class="grid2">
-          <div class="card">
-            <h3>テーマ</h3>
-            <ul>
-              <li>ドン・キホーテの無人店「キャンパスドンキ」を大学に出展</li>
-            </ul>
-
-            <div class="callout">
-              <b>本資料の結論</b>
-              成功の鍵は、<span class="accent">学生が主役であり続ける「熱狂設計」</span>。<br/>
-              課題解決（場所・告知・会員化など）は前提条件として同時並行で潰す。
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>狙う成果（2つ）</h3>
-            <div class="kpi">
-              <div class="box">
-                <b>① 学生との接点 → リクルート</b>
-                <span>「鮮烈に記憶に残る体験」を企業と共創し、好意と応募を生む</span>
+          <!-- Slide 1 -->
+          <section class="slide active">
+            <div class="topbar">
+              <div>
+                <h1 class="title">キャンパスドンキ：大学出展構想（役員向け骨子）</h1>
+                <p class="subtitle">「売上をつくる無人店」ではなく「未来の顧客と人材をつくる装置」へ</p>
               </div>
-              <div class="box">
-                <b>② majica会員化 → LTV向上</b>
-                <span>学生期に会員化し、歳をとっても使い続ける導線を作る</span>
+              <div class="meta">
+                <div>更新：2025/12/23</div>
+                <div class="pill">Why → What → How → 継続性</div>
               </div>
             </div>
-            <div class="note">※ 数値KPIは別紙化（会員化率・継続率・応募者数・紹介数など）</div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Slide 2 -->
-      <section class="slide">
-        <div class="topbar">
-          <div>
-            <h2 class="title">目的達成のための企画（What）</h2>
-            <p class="subtitle">二本柱：定期で盛り上げる／常時で改善し続ける</p>
-          </div>
-          <div class="meta">
-            <div class="pill">企画全体像</div>
-          </div>
-        </div>
+            <div class="grid2">
+              <div class="card">
+                <h3>テーマ</h3>
+                <ul>
+                  <li>ドン・キホーテの無人店「キャンパスドンキ」を大学に出展</li>
+                </ul>
 
-        <div class="grid2">
-          <div class="card">
-            <h3>① 定期施策：大学対抗「学生企画棚 売上選手権」</h3>
-            <ul>
-              <li>学生が企画者（当事者）として棚を作り、大学対抗で競う</li>
-              <li>進捗可視化・煽り・結果発表まで含めて“物語”を作る</li>
-              <li>勝敗が明確＝熱量・拡散・巻き込みが起きる</li>
-            </ul>
-            <div class="callout">
-              <b>狙い</b>
-              「買う場所」ではなく<span class="accent">「参加できるドンキ」</span>へ転換
+                <div class="callout">
+                  <b>本資料の結論</b>
+                  成功の鍵は、<span class="accent">学生が主役であり続ける「熱狂設計」</span>。<br/>
+                  課題解決（場所・告知・会員化など）は前提条件として同時並行で潰す。
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>狙う成果（2つ）</h3>
+                <div class="kpi">
+                  <div class="box">
+                    <b>① 学生との接点 → リクルート</b>
+                    <span>「鮮烈に記憶に残る体験」を企業と共創し、好意と応募を生む</span>
+                  </div>
+                  <div class="box">
+                    <b>② majica会員化 → LTV向上</b>
+                    <span>学生期に会員化し、歳をとっても使い続ける導線を作る</span>
+                  </div>
+                </div>
+                <div class="note">※ 数値KPIは別紙化（会員化率・継続率・応募者数・紹介数など）</div>
+              </div>
             </div>
-          </div>
+          </section>
 
-          <div class="card">
-            <h3>② 常時施策：学生の要望に応える店づくり（365日アンケート）</h3>
-            <ul>
-              <li>企画案募集／置いてほしい商品要望／UX改善要望</li>
-              <li>“声が反映される実感”が利用・会員化の動機になる</li>
-            </ul>
-            <div class="callout">
-              <b>狙い</b>
-              学生の不満・障壁を<span class="accent">データで把握→改善</span>し続ける
+          <!-- Slide 2 -->
+          <section class="slide">
+            <div class="topbar">
+              <div>
+                <h2 class="title">目的達成のための企画（What）</h2>
+                <p class="subtitle">二本柱：定期で盛り上げる／常時で改善し続ける</p>
+              </div>
+              <div class="meta">
+                <div class="pill">企画全体像</div>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Slide 3 -->
-      <section class="slide">
-        <div class="topbar">
-          <div>
-            <h2 class="title">企画① 実施サイクル（How）</h2>
-            <p class="subtitle">「テーマ設定→企画→実行→煽り→表彰」までをテンプレ化</p>
-          </div>
-          <div class="meta">
-            <div class="pill">1サイクル</div>
-          </div>
-        </div>
+            <div class="grid2">
+              <div class="card">
+                <h3>① 定期施策：大学対抗「学生企画棚 売上選手権」</h3>
+                <ul>
+                  <li>学生が企画者（当事者）として棚を作り、大学対抗で競う</li>
+                  <li>進捗可視化・煽り・結果発表まで含めて“物語”を作る</li>
+                  <li>勝敗が明確＝熱量・拡散・巻き込みが起きる</li>
+                </ul>
+                <div class="callout">
+                  <b>狙い</b>
+                  「買う場所」ではなく<span class="accent">「参加できるドンキ」</span>へ転換
+                </div>
+              </div>
 
-        <div class="card">
-          <h3>進め方（例）</h3>
-          <div class="grid3">
+              <div class="card">
+                <h3>② 常時施策：学生の要望に応える店づくり（365日アンケート）</h3>
+                <ul>
+                  <li>企画案募集／置いてほしい商品要望／UX改善要望</li>
+                  <li>“声が反映される実感”が利用・会員化の動機になる</li>
+                </ul>
+                <div class="callout">
+                  <b>狙い</b>
+                  学生の不満・障壁を<span class="accent">データで把握→改善</span>し続ける
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Slide 3 -->
+          <section class="slide">
+            <div class="topbar">
+              <div>
+                <h2 class="title">企画① 実施サイクル（How）</h2>
+                <p class="subtitle">「テーマ設定→企画→実行→煽り→表彰」までをテンプレ化</p>
+              </div>
+              <div class="meta">
+                <div class="pill">1サイクル</div>
+              </div>
+            </div>
+
             <div class="card">
-              <h3>① 準備</h3>
-              <ul>
-                <li>テーマ設定</li>
-                <li>参加者募集（学生ファシリテーター）</li>
-                <li>棚作り／商品選定</li>
-              </ul>
-              <div class="hint">学生が主役：ドンキは舞台提供</div>
-            </div>
-            <div class="card">
-              <h3>② 実行</h3>
-              <ul>
-                <li>企画実行（期間運用）</li>
-                <li>日次/週次で進捗共有</li>
-                <li>大学対抗の煽り演出</li>
-              </ul>
-              <div class="hint">途中経過が“語れる”設計が鍵</div>
-            </div>
-            <div class="card">
-              <h3>③ 回収</h3>
-              <ul>
-                <li>結果発表</li>
-                <li>賞品贈呈</li>
-                <li>次回への導線（連続性）</li>
-              </ul>
-              <div class="hint">単発化させない</div>
-            </div>
-          </div>
+              <h3>進め方（例）</h3>
+              <div class="grid3">
+                <div class="card">
+                  <h3>① 準備</h3>
+                  <ul>
+                    <li>テーマ設定</li>
+                    <li>参加者募集（学生ファシリテーター）</li>
+                    <li>棚作り／商品選定</li>
+                  </ul>
+                  <div class="hint">学生が主役：ドンキは舞台提供</div>
+                </div>
+                <div class="card">
+                  <h3>② 実行</h3>
+                  <ul>
+                    <li>企画実行（期間運用）</li>
+                    <li>日次/週次で進捗共有</li>
+                    <li>大学対抗の煽り演出</li>
+                  </ul>
+                  <div class="hint">途中経過が“語れる”設計が鍵</div>
+                </div>
+                <div class="card">
+                  <h3>③ 回収</h3>
+                  <ul>
+                    <li>結果発表</li>
+                    <li>賞品贈呈</li>
+                    <li>次回への導線（連続性）</li>
+                  </ul>
+                  <div class="hint">単発化させない</div>
+                </div>
+              </div>
 
-          <div class="callout">
-            <b>賞品例（体験価値で差別化）</b>
-            ドンキ渋谷本店＆本社ツアー／ホテルインディゴ宿泊権／台湾 DON DON DONKI ツアー招待／数量限定レッドブル1円 など
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 4 -->
-      <section class="slide">
-        <div class="topbar">
-          <div>
-            <h2 class="title">最重要：学生モチベーション設計（深掘り）</h2>
-            <p class="subtitle">「熱狂」が生まれれば、拡散・会員化・応募は自然に後からついてくる</p>
-          </div>
-          <div class="meta">
-            <div class="pill">成否を分ける論点</div>
-          </div>
-        </div>
-
-        <div class="grid2">
-          <div class="card">
-            <h3>学生が動き続ける4ドライバー</h3>
-            <ul>
-              <li><b>主体性：</b>自分で決めた（企画・選定・棚づくり）</li>
-              <li><b>承認：</b>見られる・評価される（可視化／ランキング）</li>
-              <li><b>競争：</b>大学対抗（勝敗の明確化／物語化）</li>
-              <li><b>成長：</b>就活に使える（仮説→検証→数値）</li>
-            </ul>
-            <div class="callout">
-              <b>ドンキの基本姿勢</b>
-              教えない／指示しない／失敗も含めて任せる（当事者化の最大化）
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>「維持」させる仕掛け（未整理→要設計）</h3>
-            <ul>
-              <li>途中経過を煽る（順位変動・逆転可能性・進捗発信）</li>
-              <li>“語れる”表現（企画名・顔・ストーリー）</li>
-              <li>SNS/学内/店頭の連動（拡散の型を用意）</li>
-              <li>次回へつなぐ（勝者特典／敗者リベンジ導線）</li>
-            </ul>
-            <div class="note">※ ここが弱いと単発イベント化し、目的（LTV/採用）に届かない</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 5 -->
-      <section class="slide">
-        <div class="topbar">
-          <div>
-            <h2 class="title">参加設計：量×質を両立する「二層モデル」</h2>
-            <p class="subtitle">本質的な接点（記憶・好意・行動変容）を生むのは熱量の高いコア層</p>
-          </div>
-          <div class="meta">
-            <div class="pill">特別感 → 継続</div>
-          </div>
-        </div>
-
-        <div class="grid2">
-          <div class="card">
-            <h3>設計思想</h3>
-            <ul>
-              <li>認知・関心の母数は広く取る（周辺参加者を最大化）</li>
-              <li>一方で深い体験は限定する（コア参加者に集中投資）</li>
-            </ul>
-            <div class="callout">
-              <b>狙い</b>
-              「全員参加」ではなく<span class="accent">“語り部”になる学生</span>を毎回生む
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>参加構造（例）</h3>
-            <ul>
-              <li><b>コア参加者（限定枠）：</b>1企画 上限 50名</li>
-              <li>役割：企画立案／商品選定／棚づくり／運用改善</li>
-              <li><b>賞品獲得はコア50名に限定</b>（特別感→モチベ維持）</li>
-              <li><b>周辺参加者（オープン層）：</b>投票・応援・購入・拡散</li>
-            </ul>
-            <div class="callout">
-              <b>なぜ上限が効くか</b>
-              無制限参加だと責任が薄まり熱量が分散。<br/>
-              上限設定で「選ばれた感」「当事者性」「再挑戦」が回り出す。
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 6 -->
-      <section class="slide">
-        <div class="topbar">
-          <div>
-            <h2 class="title">既存2店舗で見えた課題（前提条件として解決）</h2>
-            <p class="subtitle">課題解決は“当たり前にやる”／主軸は目的達成の体験設計</p>
-          </div>
-          <div class="meta">
-            <div class="pill">課題→打ち手の方向</div>
-          </div>
-        </div>
-
-        <div class="grid2">
-          <div class="card">
-            <h3>課題（現状）</h3>
-            <ul>
-              <li>出店場所選定（校内導線：どこに置くか）</li>
-              <li>事前告知・認知施策が弱い</li>
-              <li>majica会員化の障壁（面倒くさい 等）</li>
-              <li>チャージの障壁（手段が煩雑？実態調査が必要）</li>
-              <li>入店ゲート：会員コード読み込み精度が極めて悪い</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>優先整理（方向性）</h3>
-            <ul>
-              <li><b>場所：</b>大学導線の“必ず通る”地点を最優先</li>
-              <li><b>告知：</b>学内チャネル＋学生主導SNSの二軸</li>
-              <li><b>会員化：</b>初回導線の摩擦を最小化（その場で完結）</li>
-              <li><b>チャージ：</b>アンケートで障壁を定量化→改善</li>
-              <li><b>ゲート：</b>UXとして致命的。改善/代替導線の検討</li>
-            </ul>
-            <div class="note">※ 詳細施策・仕様検討は別紙（運用/技術/法務）</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 7 -->
-      <section class="slide">
-        <div class="topbar">
-          <div>
-            <h2 class="title">まとめ：意思決定ポイント</h2>
-            <p class="subtitle">キャンパスドンキを「顧客・人材」創出の再現可能モデルにする</p>
-          </div>
-          <div class="meta">
-            <div class="pill">Decision</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>役員にお願いしたい判断（案）</h3>
-          <div class="grid2">
-            <div class="card">
-              <h3>① 企画の“思想”</h3>
-              <ul>
-                <li>売上目的ではなく「体験→採用・LTV」目的で推進する</li>
-                <li>学生が主役：ドンキは舞台提供者に徹する</li>
-                <li>参加は二層（コア50名＋周辺オープン）で設計する</li>
-              </ul>
-            </div>
-            <div class="card">
-              <h3>② 次フェーズで固めること</h3>
-              <ul>
-                <li>モチベ維持の“表現設計”（可視化・煽り・連続性）</li>
-                <li>majica会員化／チャージ障壁の実態調査（アンケート設計）</li>
-                <li>ゲート読取の改善（UXとして最優先）</li>
-              </ul>
               <div class="callout">
-                <b>一言</b>
-                熱狂が生まれれば、拡散・会員化・応募は自然に後からついてくる。
+                <b>賞品例（体験価値で差別化）</b>
+                ドンキ渋谷本店＆本社ツアー／ホテルインディゴ宿泊権／台湾 DON DON DONKI ツアー招待／数量限定レッドブル1円 など
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
+          <!-- Slide 4 -->
+          <section class="slide">
+            <div class="topbar">
+              <div>
+                <h2 class="title">最重要：学生モチベーション設計（深掘り）</h2>
+                <p class="subtitle">「熱狂」が生まれれば、拡散・会員化・応募は自然に後からついてくる</p>
+              </div>
+              <div class="meta">
+                <div class="pill">成否を分ける論点</div>
+              </div>
+            </div>
+
+            <div class="grid2">
+              <div class="card">
+                <h3>学生が動き続ける4ドライバー</h3>
+                <ul>
+                  <li><b>主体性：</b>自分で決めた（企画・選定・棚づくり）</li>
+                  <li><b>承認：</b>見られる・評価される（可視化／ランキング）</li>
+                  <li><b>競争：</b>大学対抗（勝敗の明確化／物語化）</li>
+                  <li><b>成長：</b>就活に使える（仮説→検証→数値）</li>
+                </ul>
+                <div class="callout">
+                  <b>ドンキの基本姿勢</b>
+                  教えない／指示しない／失敗も含めて任せる（当事者化の最大化）
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>「維持」させる仕掛け（未整理→要設計）</h3>
+                <ul>
+                  <li>途中経過を煽る（順位変動・逆転可能性・進捗発信）</li>
+                  <li>“語れる”表現（企画名・顔・ストーリー）</li>
+                  <li>SNS/学内/店頭の連動（拡散の型を用意）</li>
+                  <li>次回へつなぐ（勝者特典／敗者リベンジ導線）</li>
+                </ul>
+                <div class="note">※ ここが弱いと単発イベント化し、目的（LTV/採用）に届かない</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Slide 5 -->
+          <section class="slide">
+            <div class="topbar">
+              <div>
+                <h2 class="title">参加設計：量×質を両立する「二層モデル」</h2>
+                <p class="subtitle">本質的な接点（記憶・好意・行動変容）を生むのは熱量の高いコア層</p>
+              </div>
+              <div class="meta">
+                <div class="pill">特別感 → 継続</div>
+              </div>
+            </div>
+
+            <div class="grid2">
+              <div class="card">
+                <h3>設計思想</h3>
+                <ul>
+                  <li>認知・関心の母数は広く取る（周辺参加者を最大化）</li>
+                  <li>一方で深い体験は限定する（コア参加者に集中投資）</li>
+                </ul>
+                <div class="callout">
+                  <b>狙い</b>
+                  「全員参加」ではなく<span class="accent">“語り部”になる学生</span>を毎回生む
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>参加構造（例）</h3>
+                <ul>
+                  <li><b>コア参加者（限定枠）：</b>1企画 上限 50名</li>
+                  <li>役割：企画立案／商品選定／棚づくり／運用改善</li>
+                  <li><b>賞品獲得はコア50名に限定</b>（特別感→モチベ維持）</li>
+                  <li><b>周辺参加者（オープン層）：</b>投票・応援・購入・拡散</li>
+                </ul>
+                <div class="callout">
+                  <b>なぜ上限が効くか</b>
+                  無制限参加だと責任が薄まり熱量が分散。<br/>
+                  上限設定で「選ばれた感」「当事者性」「再挑戦」が回り出す。
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Slide 6 -->
+          <section class="slide">
+            <div class="topbar">
+              <div>
+                <h2 class="title">既存2店舗で見えた課題（前提条件として解決）</h2>
+                <p class="subtitle">課題解決は“当たり前にやる”／主軸は目的達成の体験設計</p>
+              </div>
+              <div class="meta">
+                <div class="pill">課題→打ち手の方向</div>
+              </div>
+            </div>
+
+            <div class="grid2">
+              <div class="card">
+                <h3>課題（現状）</h3>
+                <ul>
+                  <li>出店場所選定（校内導線：どこに置くか）</li>
+                  <li>事前告知・認知施策が弱い</li>
+                  <li>majica会員化の障壁（面倒くさい 等）</li>
+                  <li>チャージの障壁（手段が煩雑？実態調査が必要）</li>
+                  <li>入店ゲート：会員コード読み込み精度が極めて悪い</li>
+                </ul>
+              </div>
+
+              <div class="card">
+                <h3>優先整理（方向性）</h3>
+                <ul>
+                  <li><b>場所：</b>大学導線の“必ず通る”地点を最優先</li>
+                  <li><b>告知：</b>学内チャネル＋学生主導SNSの二軸</li>
+                  <li><b>会員化：</b>初回導線の摩擦を最小化（その場で完結）</li>
+                  <li><b>チャージ：</b>アンケートで障壁を定量化→改善</li>
+                  <li><b>ゲート：</b>UXとして致命的。改善/代替導線の検討</li>
+                </ul>
+                <div class="note">※ 詳細施策・仕様検討は別紙（運用/技術/法務）</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Slide 7 -->
+          <section class="slide">
+            <div class="topbar">
+              <div>
+                <h2 class="title">運営体制と母店インセンティブ設計（追加論点）</h2>
+                <p class="subtitle">キャンパスドンキの持続運用は「母店のモチベーション設計」で決まる</p>
+              </div>
+              <div class="meta">
+                <div class="pill">運用の現実解</div>
+              </div>
+            </div>
+
+            <div class="grid2">
+              <div class="card">
+                <h3>運営の実態</h3>
+                <ul>
+                  <li>キャンパスドンキの運営は、近隣のドン・キホーテ（母店）の各担当者が担う</li>
+                  <li>通常店舗と比べると、キャンパスドンキは小さく売上規模は限定的</li>
+                  <li>そのため「キャンパスドンキ単体の採算」だけでは運営優先度が上がりづらい</li>
+                </ul>
+                <div class="callout">
+                  <b>示唆</b>
+                  持続的に回すには、母店側が「やる意味」を体感できる設計が必要。
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>インセンティブの基本方針（案）</h3>
+                <ul>
+                  <li>キャンパスドンキへの直接補助ではなく、<b>母店に補填</b>する方が運営者のモチベーションが上がる</li>
+                  <li>補填の“形”は要検討（現金以外も含めて検討余地）</li>
+                </ul>
+
+                <div class="callout">
+                  <b>検討論点（例）</b>
+                  <ul>
+                    <li>母店側KPIへの反映（評価・表彰・権限など）</li>
+                    <li>運営負担に応じた工数/コストの見える化と補填</li>
+                    <li>母店にとってのメリット（人材育成・PR・採用連動など）</li>
+                  </ul>
+                </div>
+
+                <div class="note">※ 具体スキームは、運用実態（担当者・作業量・頻度）を棚卸しした上で設計する</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Slide 8 -->
+          <section class="slide">
+            <div class="topbar">
+              <div>
+                <h2 class="title">まとめ：意思決定ポイント</h2>
+                <p class="subtitle">キャンパスドンキを「顧客・人材」創出の再現可能モデルにする</p>
+              </div>
+              <div class="meta">
+                <div class="pill">Decision</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>役員にお願いしたい判断（案）</h3>
+              <div class="grid2">
+                <div class="card">
+                  <h3>① 企画の“思想”</h3>
+                  <ul>
+                    <li>売上目的ではなく「体験→採用・LTV」目的で推進する</li>
+                    <li>学生が主役：ドンキは舞台提供者に徹する</li>
+                    <li>参加は二層（コア50名＋周辺オープン）で設計する</li>
+                    <li>運営継続は「母店インセンティブ設計」で担保する</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>② 次フェーズで固めること</h3>
+                  <ul>
+                    <li>モチベ維持の“表現設計”（可視化・煽り・連続性）</li>
+                    <li>majica会員化／チャージ障壁の実態調査（アンケート設計）</li>
+                    <li>ゲート読取の改善（UXとして最優先）</li>
+                    <li>母店の運用実態棚卸し → 補填スキーム設計</li>
+                  </ul>
+                  <div class="callout">
+                    <b>一言</b>
+                    熱狂が生まれれば、拡散・会員化・応募は自然に後からついてくる。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
     </div>
 
-    <div class="controls">
+    <div class="controls" id="controls">
       <div class="btns">
         <button id="prevBtn" type="button">← 前へ</button>
         <button id="nextBtn" type="button">次へ →</button>
@@ -507,18 +577,27 @@
         <div class="bar" id="bar"></div>
       </div>
 
-      <div class="help" id="pageText">1 / 7　（←→キー / スワイプでもOK）</div>
+      <div class="help" id="pageText">1 / 8　（←→キー / スワイプでもOK）</div>
     </div>
   </div>
 
   <script>
     (function(){
+      const BASE_W = 1280;
+      const BASE_H = 720;
+
       const slides = Array.from(document.querySelectorAll('.slide'));
       const total = slides.length;
+
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       const pageText = document.getElementById('pageText');
       const bar = document.getElementById('bar');
+
+      const stageWrap = document.getElementById('stageWrap');
+      const stageOuter = document.getElementById('stageOuter');
+      const stage = document.getElementById('stage');
+      const controls = document.getElementById('controls');
 
       function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
@@ -536,6 +615,29 @@
       function prev(){ setIndex(state.index - 1); }
 
       const state = { index: 0, touchX: null, touchY: null };
+
+      // --- Fit-to-viewport scaling (no clipping on any device) ---
+      function layout(){
+        // stageWrap の表示可能領域
+        const rect = stageWrap.getBoundingClientRect();
+
+        // 余白（端末差・セーフエリア差の吸収）
+        const pad = 8;
+        const availW = Math.max(0, rect.width - pad*2);
+        const availH = Math.max(0, rect.height - pad*2);
+
+        // 16:9固定のスライドを、必ず availW/availH に収める
+        const scale = Math.max(0.1, Math.min(availW / BASE_W, availH / BASE_H));
+
+        stage.style.transform = "scale(" + scale + ")";
+
+        // スケール後の表示サイズで外枠を合わせる（中央配置が崩れないように）
+        stageOuter.style.width = (BASE_W * scale) + "px";
+        stageOuter.style.height = (BASE_H * scale) + "px";
+      }
+
+      window.addEventListener('resize', layout);
+      window.addEventListener('orientationchange', layout);
 
       // init from hash
       const m = location.hash.match(/^#(\d+)$/);
@@ -557,7 +659,6 @@
       });
 
       // simple swipe
-      const stage = document.getElementById('stage');
       stage.addEventListener('touchstart', (e)=>{
         if(!e.touches || e.touches.length!==1) return;
         state.touchX = e.touches[0].clientX;
@@ -572,12 +673,16 @@
         const dy = t.clientY - state.touchY;
         state.touchX = null; state.touchY = null;
 
-        // ignore mostly-vertical gestures
         if(Math.abs(dy) > Math.abs(dx)) return;
-
         if(dx < -40) next();
         if(dx > 40) prev();
       }, {passive:true});
+
+      // first layout
+      layout();
+      // iOSで初回レイアウトがズレる保険
+      setTimeout(layout, 50);
+      setTimeout(layout, 250);
     })();
   </script>
 </body>
